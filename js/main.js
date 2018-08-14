@@ -33,14 +33,17 @@ var dataControllor = (function () {
 
 		//Regiester a new user
 		addUser: function (username, password) {
-			var newUser;
+			var newUser, message;
+
 			newUser = new Users(username, password);
 
 			// add to the user to the database
-			return postData('http://127.0.0.1:5000/api/v1/auth/signup', newUser)
-				.then(data => console.log(data))
-				.catch(error => console.error(error));
+			message = postData('http://127.0.0.1:5000/api/v1/auth/signup', newUser);
+			return message;
 		},
+		//login a user the application
+
+		//list the entries for the specific user
 
 		// add a new entry to the data structure
 
@@ -85,6 +88,7 @@ var uiController = (function () {
 				cur.value = '';
 			});
 		},
+
 		getDomStrings: function () {
 			return DOMstrings;
 		},
@@ -97,13 +101,13 @@ var uiController = (function () {
 
 
 
-
-
 // this controllor module that creates a connection btween other modules
 var controllor = (function (dataControllor, uiController) {
-	var signUpInput;
+	var signUpInput, message,SetUpEventListner,addUser;
+
+
 	// function that sets up the events and the event variables
-	var SetUpEventListner = function () {
+	SetUpEventListner = function () {
 		var DOM = uiController.getDomStrings();
 
 		document.querySelector(DOM.submitButton).addEventListener('click', addUser);
@@ -115,17 +119,32 @@ var controllor = (function (dataControllor, uiController) {
 
 	};
 
-
 	// Add the user to the app system
-	var addUser = function () {
+	addUser = function () {
 		signUpInput = uiController.getUserData();
 
 		//add the item to the dataControllor
-		dataControllor.addUser(signUpInput.username, signUpInput.password);
-        
+		message = dataControllor.addUser(signUpInput.username, signUpInput.password);
+		
+		//redirect the user
+		message.then(function (data) {
+			if (data['message'] ==='new user created'){
+				window.location.replace('file:///E:/projects/MyDiary_version_2.0/signin.html');
+			}else{
+				console.log('you have to login please');
+			}
+		})
+			.catch(function(error){
+				console.error(error);
+			});
+
 		//clear the ui fields
 		uiController.clearField();
+
+		
 	};
+
+	//login the user the app
 
 	// add an entry to the app system
 	return {
