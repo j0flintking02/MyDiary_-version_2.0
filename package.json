@@ -1,0 +1,18 @@
+{
+  "name": "mydiary_version_2.0",
+  "version": "1.0.0",
+  "description": "This is an online application for keeping track of one's daliy journels, for one to easily retrace back in time to learn from his draw-backs celebrate his or her milestones",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/j0flintking02/MyDiary_version_2.0.git"
+  },
+  "keywords": [
+    "<br>"
+  ],
+  "author": "Jonathan",
+  "license": "ISC"
+}
