@@ -95,20 +95,12 @@ var uiController = (function () {
 
 // this controllor module that creates a connection btween other modules
 var controllor = (function (dataControllor, uiController) {
-<<<<<<< HEAD
-	var signUpInput, message,SetUpEventListner,addUser;
-=======
 	var DOM,signUpInput, message,SetUpEventListner,addUser;
->>>>>>> ft-loginUser-01
 
 
 	// function that sets up the events and the event variables
 	SetUpEventListner = function () {
-<<<<<<< HEAD
-		var DOM = uiController.getDomStrings();
-=======
 		DOM = uiController.getDomStrings();
->>>>>>> ft-loginUser-01
 
 		document.querySelector(DOM.submitButton).addEventListener('click', addUser);
 		document.addEventListener('keypress', function (e) {
