@@ -42,18 +42,6 @@ var dataControllor = (function () {
 			message = postData('http://127.0.0.1:5000/api/v1/auth/signup', newUser);
 			return message;
 		},
-<<<<<<< HEAD
-		//login a user the application
-
-		//list the entries for the specific user
-
-		// add a new entry to the data structure
-
-		// retrive entries from the data structure
-
-		// edit an entry from the data structure
-=======
->>>>>>> ft-loginUser-01
 	};
 })();
 
