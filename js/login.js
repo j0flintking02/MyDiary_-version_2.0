@@ -11,7 +11,7 @@ var dataControllor = (function () {
 	}
 
 
-	const postData = (url = '', data = {}) => {
+	const loginUser = (url = '', data = {}) => {
 		return fetch(url, {
 			method: 'POST',
 			mode: 'cors',
@@ -29,19 +29,23 @@ var dataControllor = (function () {
 	};
 
 
-
 	return {
 
-		//Regiester a new user
-		addUser: function (username, password) {
-			var newUser, message;
+		//login a user the application
+		loginUser: function (username, password) {
+			var userDetails, token;
+			userDetails = new Users(username, password);
+			token = loginUser('http://127.0.0.1:5000/api/v1/auth/login', userDetails);
+			return token;
+		}
 
-			newUser = new Users(username, password);
+		//list the entries for the specific user
 
-			// add to the user to the database
-			message = postData('http://127.0.0.1:5000/api/v1/auth/signup', newUser);
-			return message;
-		},
+		// add a new entry to the data structure
+
+		// retrive entries from the data structure
+
+		// edit an entry from the data structure
 	};
 })();
 
@@ -57,7 +61,6 @@ var uiController = (function () {
 		user_name: '#userName',
 		user_password: '#password',
 		submitButton: '#submit',
-		userContianer: '.userContianer',
 	};
 
 	return {
@@ -95,45 +98,47 @@ var uiController = (function () {
 
 // this controllor module that creates a connection btween other modules
 var controllor = (function (dataControllor, uiController) {
-	var DOM,signUpInput, message,SetUpEventListner,addUser;
+	var DOM, signUpInput, SetUpEventListner, logUser, token;
 
 
 	// function that sets up the events and the event variables
 	SetUpEventListner = function () {
 		DOM = uiController.getDomStrings();
 
-		document.querySelector(DOM.submitButton).addEventListener('click', addUser);
+		document.querySelector(DOM.submitButton).addEventListener('click', logUser);
 		document.addEventListener('keypress', function (e) {
 			if (e.keyCode === 13 || e.which == 13) {
-				addUser();
+				logUser();
 			}
 		});
 
 	};
 
-	// Add the user to the app system
-	addUser = function () {
+	// log the user to the app system
+	logUser = function () {
 		signUpInput = uiController.getUserData();
 
 		//add the item to the dataControllor
-		message = dataControllor.addUser(signUpInput.username, signUpInput.password);
-		
+		token = dataControllor.loginUser(signUpInput.username, signUpInput.password);
+
 		//redirect the user
-		message.then(function (data) {
-			if (data['message'] ==='new user created'){
-				window.location.replace('file:///E:/projects/MyDiary_version_2.0/signin.html');
-			}else{
+		token.then(function (data) {
+			if (data['token']) {
+				sessionStorage.setItem('token', data['token']);
+				
+				window.location.replace('file:///E:/projects/MyDiary_version_2.0/events.html');
+			} else {
 				console.log('you have to login please');
 			}
 		})
-			.catch(function(error){
+			.catch(function (error) {
 				console.error(error);
 			});
 
 		//clear the ui fields
 		uiController.clearField();
 
-		
+
 	};
 
 	// add an entry to the app system
