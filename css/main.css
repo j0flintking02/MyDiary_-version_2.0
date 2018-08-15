@@ -1,13 +1,6 @@
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-@font-face{
-    font-family: myheartache;
-    src: url(fonts/Hello\ Heartache\ -\ OTF.otf);
-}
-
-
-
 html {
     color: #222;
     font-size: 1em;
