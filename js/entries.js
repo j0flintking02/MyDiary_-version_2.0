@@ -26,8 +26,8 @@ var dataControllor = (function () {
 		//login a user the application
 		getEtries: function () {
 			var userEntries, token;
-			token =sessionStorage.getItem('token');
-	
+			token = sessionStorage.getItem('token');
+
 			userEntries = entries('http://127.0.0.1:5000/api/v1/entries', token);
 			return userEntries;
 		}
@@ -43,30 +43,34 @@ var dataControllor = (function () {
 // ui control module
 var uiController = (function () {
 	var DOMstrings = {
-		user_name: '#userName',
-		user_password: '#password',
-		submitButton: '#submit',
+		entryDate: '.entryDate',
+		entryTitle: '.entryTitle',
+		entryContianer: '.events'
 	};
 
 	return {
 
-		// obtian the user information from the form
-		getUserData: function () {
-			return {
-				username: document.querySelector(DOMstrings.user_name).value,
-				password: document.querySelector(DOMstrings.user_password).value
-			};
-		},
 
-		// clear the user ui
-		clearField: function () {
-			var fields, fieldArr;
-			fields = document.querySelectorAll(DOMstrings.user_name + ',' + DOMstrings.user_password);
-			fieldArr = Array.prototype.slice.call(fields);
+		display: function (newEntries) {
+	
+			var placehloder, element, newData;
+			//create html string with the placeholder text
+			element = DOMstrings.entryContianer;
+			placehloder =
+				`<div href="#" class="entry">
+					<p>
+						<strong>Date:</strong>
+						<a class="entryDate" href="description.html">%entry_date%</a>
+					</p>
+					<h2 class ="entryTitle">%entry_title%</h2>
+        		</div>`;
 
-			fieldArr.forEach(function (cur) {
-				cur.value = '';
-			});
+			//replace the placeholder text with actual data
+			newData = placehloder.replace('%entry_date%', newEntries.date);
+			newData = placehloder.replace('entry_title%', newEntries.title);
+
+			//Insert the html in to the DOM
+			document.querySelector(element).insertAdjacentHTML('beforeend', newData);
 		},
 
 		getDomStrings: function () {
@@ -92,10 +96,12 @@ var controllor = (function (dataControllor, uiController) {
 		loadEntries();
 	};
 
-	loadEntries = function(){
+	loadEntries = function () {
 		entries = dataControllor.getEtries();
-		entries.then(data => console.log(data)
-		).catch(error => console.error(error));
+		entries.then(data => {
+			uiController.display(data);
+		})
+			.catch(error => console.error(error));
 	};
 
 	// add an entry to the app system
