@@ -116,7 +116,6 @@ var controllor = (function (dataControllor, uiController) {
 		}).catch(error => console.error(error));
 	};
 
-	// add an entry to the app system
 	return {
 		init: function () {
 			SetUpEventListner();
