@@ -53,6 +53,7 @@ var uiController = (function () {
 
 		display: function (newEntries) {
 			var placehloder, element, newData, newList;
+			
 			//create html string with the placeholder text
 			element = DOMstrings.entryContianer;
 			if (newEntries === undefined) {
@@ -74,9 +75,11 @@ var uiController = (function () {
 					//replace the placeholder text with actual data
 					newData = placehloder.replace('%entry_date%', id['entry date']);
 					newData = newData.replace('%entry_title%', id['title']);
+
+					//Insert the html in to the DOM
 					document.querySelector(element).insertAdjacentHTML('beforeend', newData);
 				});
-				//Insert the html in to the DOM
+				
 				
 				
 				
