@@ -52,25 +52,36 @@ var uiController = (function () {
 
 
 		display: function (newEntries) {
-	
-			var placehloder, element, newData;
+			var placehloder, element, newData, newList;
 			//create html string with the placeholder text
 			element = DOMstrings.entryContianer;
-			placehloder =
-				`<div href="#" class="entry">
+			if (newEntries === undefined) {
+				placehloder = 
+				'<h3> login to see your journals </h3>';
+				document.querySelector(element).insertAdjacentHTML('beforeend', placehloder);
+			} else {
+				
+				placehloder =
+				`<div class="entry">
 					<p>
 						<strong>Date:</strong>
 						<a class="entryDate" href="description.html">%entry_date%</a>
 					</p>
 					<h2 class ="entryTitle">%entry_title%</h2>
         		</div>`;
-
-			//replace the placeholder text with actual data
-			newData = placehloder.replace('%entry_date%', newEntries.date);
-			newData = placehloder.replace('entry_title%', newEntries.title);
-
-			//Insert the html in to the DOM
-			document.querySelector(element).insertAdjacentHTML('beforeend', newData);
+				newList = newEntries['entries'];
+				newList.forEach(id => {
+					//replace the placeholder text with actual data
+					newData = placehloder.replace('%entry_date%', id['entry date']);
+					newData = newData.replace('%entry_title%', id['title']);
+					document.querySelector(element).insertAdjacentHTML('beforeend', newData);
+				});
+				//Insert the html in to the DOM
+				
+				
+				
+			}
+	
 		},
 
 		getDomStrings: function () {
@@ -100,8 +111,8 @@ var controllor = (function (dataControllor, uiController) {
 		entries = dataControllor.getEtries();
 		entries.then(data => {
 			uiController.display(data);
-		})
-			.catch(error => console.error(error));
+				
+		}).catch(error => console.error(error));
 	};
 
 	// add an entry to the app system
