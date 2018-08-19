@@ -66,14 +66,15 @@ var uiController = (function () {
 				`<div class="entry">
 					<p>
 						<strong>Date:</strong>
-						<a class="entryDate" href="description.html">%entry_date%</a>
+						<a class="entryDate" href="description.html?id=%id%">%entry_date%</a>
 					</p>
 					<h2 class ="entryTitle">%entry_title%</h2>
         		</div>`;
 				newList = newEntries['entries'];
 				newList.forEach(id => {
 					//replace the placeholder text with actual data
-					newData = placehloder.replace('%entry_date%', id['entry date']);
+					newData = placehloder.replace('%id%', id['entry id']);
+					newData = newData.replace('%entry_date%', id['entry date']);
 					newData = newData.replace('%entry_title%', id['title']);
 
 					//Insert the html in to the DOM
