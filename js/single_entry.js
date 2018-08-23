@@ -3,6 +3,13 @@
 // This is the data control module
 var dataControllor = (function () {
 
+	class Entries {
+		constructor(title, description) {
+			this.title = title;
+			this.description = description;
+		}
+	}
+
 
 	const entries = (url = '', token) => {
 		return fetch(url, {
@@ -14,6 +21,23 @@ var dataControllor = (function () {
 				'Content-Type': 'application/json; charset=utf-8',
 				'x-access-token': token
 			},
+		})
+			.then(response => response.json())
+			.catch(error => console.error('Fetch Error =\n', error));
+	};
+	const updateEntries = (url = '', token, data = {}) => {
+		return fetch(url, {
+			method: 'PUT',
+			mode: 'cors',
+			cache: 'no-cache',
+			credentials: 'same-origin',
+			headers: {
+				'Content-Type': 'application/json; charset=utf-8',
+				'x-access-token': token
+			},
+			redirect: 'follow',
+			referrer: 'no-referrer',
+			body: JSON.stringify(data),
 		})
 			.then(response => response.json())
 			.catch(error => console.error('Fetch Error =\n', error));
@@ -34,6 +58,19 @@ var dataControllor = (function () {
 
 			userEntries = entries('http://127.0.0.1:5000/api/v1/entries/'+id, token);
 			return userEntries;
+		},
+
+		// edit an entry 
+		editEntry: function(title,description){
+			var entry,token, output, id,raw_url,url;
+			token = sessionStorage.getItem('token');
+			entry = new Entries(title, description);
+			raw_url = window.location.href;
+			url = new URL(raw_url);
+			id = url.searchParams.get('id');
+			output = updateEntries('http://127.0.0.1:5000/api/v1/entries/'+id, token, entry);
+			return output;
+
 		}
 	};
 })();
@@ -49,15 +86,21 @@ var uiController = (function () {
 	var DOMstrings = {
 		entryDate: '.entryDate',
 		entryTitle: '.entryTitle',
-		entryContianer: '.description'
+		entryContianer: '.description',
+		updateModel: '#updateModel',
+		submit:'#submit',
+		title: '#title',
+		description: '#description',
+		submitButton: '#submit',
+		update: '#update',
+		close:'.close'
 	};
-
+	var model,placehloder, element, newData, date, title, description;
+	model = document.querySelector(DOMstrings.updateModel);
 	return {
 
 
 		display: function (newEntries) {
-	
-			var placehloder, element, newData, date, title, description;
 			//create html string with the placeholder text
 			element = DOMstrings.entryContianer;
 			placehloder =
@@ -73,7 +116,9 @@ var uiController = (function () {
             </div>
             <p>
                 %description%
-            </p>
+			</p>
+			<button id="submit" type="submit">update description</button>
+			
             `;
 			date = newEntries['entry']['entry date'];
 			title = newEntries['entry']['title'];
@@ -86,9 +131,35 @@ var uiController = (function () {
                 
 			//Insert the html in to the 
 			document.querySelector(element).insertAdjacentHTML('beforeend',  newData);
+			
+			
 
 		},
+		
+		displayModel: function(){
+			model.style.display = 'block';
+		},
+		getUserData: function () {
+			return {
+				title: document.querySelector(DOMstrings.title).value,
+				description: document.querySelector(DOMstrings.description).value
+			};
+		},
 
+		// clear the user ui
+		clearField: function () {
+			var fields, fieldArr;
+			fields = document.querySelectorAll(DOMstrings.title + ',' + DOMstrings.description);
+			fieldArr = Array.prototype.slice.call(fields);
+
+			fieldArr.forEach(function (cur) {
+				cur.value = '';
+			});
+		},
+
+		closeModel: function () {
+			model.style.display = 'none';	
+		},
 		getDomStrings: function () {
 			return DOMstrings;
 		},
@@ -103,22 +174,61 @@ var uiController = (function () {
 
 // this controllor module that creates a connection btween other modules
 var controllor = (function (dataControllor, uiController) {
-	var entries, loadEntries, SetUpEventListner;
+	var entries, loadEntries, SetUpEventListner, DOM,Model, input, output, sendUpdate, raw_url, url, id;
 
 
 	// function that sets up the events and the event variables
 	SetUpEventListner = function () {
-		uiController.getDomStrings();
+		DOM = uiController.getDomStrings();		
 		loadEntries();
 	};
 
 	loadEntries = function () {
+		
 		entries = dataControllor.getEtries();
 		entries.then(data => {
 			uiController.display(data);
+			document.querySelector(DOM.submit).addEventListener('click', Model);
 		})
 			.catch(error => console.error(error));
 	};
+
+	sendUpdate= function(e){
+		e.preventDefault();	
+		
+		input = uiController.getUserData();
+		console.log(input);
+		output = dataControllor.editEntry(input.title, input.description);
+
+		output.then(function (data) {
+			if (data) {
+				console.log('update is complete');
+				raw_url = window.location.href;
+				url = new URL(raw_url);
+				id = url.searchParams.get('id');
+				window.location.replace('file:///E:/projects/MyDiary_version_2.0/description.html?id='+id);
+			
+			} else {
+				console.log('Complete the form before you try to continue');
+			}
+		})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
+
+	Model = function(){
+		uiController.displayModel();
+		document.querySelector(DOM.update).addEventListener('click', sendUpdate);
+		
+
+		//clear the ui fields
+		uiController.clearField();
+
+		document.querySelector(DOM.close).addEventListener('click', uiController.closeModel);		
+		
+	};
+	
 
 	// add an entry to the app system
 	return {
