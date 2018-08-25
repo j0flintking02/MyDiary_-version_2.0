@@ -35,7 +35,7 @@ var dataControllor = (function () {
 		loginUser: function (username, password) {
 			var userDetails, token;
 			userDetails = new Users(username, password);
-			token = loginUser('http://127.0.0.1:5000/api/v1/auth/login', userDetails);
+			token = loginUser('https://mydiary201808.herokuapp.com/api/v1/auth/login', userDetails);
 			return token;
 		}
 

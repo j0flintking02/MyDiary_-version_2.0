@@ -293,8 +293,8 @@ text-align: center;
     width: 80%; /* Could be more or less, depending on screen size */
 }
 #updateModel>.sginup_form>legend, label{
-    font-size: 35px;
-    color: white;
+    /* font-size: 35px; */
+    /* color: white; */
 }
 
 /* The Close Button */

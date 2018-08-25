@@ -28,7 +28,7 @@ var dataControllor = (function () {
 			var userEntries, token;
 			token = sessionStorage.getItem('token');
 
-			userEntries = entries('http://127.0.0.1:5000/api/v1/entries', token);
+			userEntries = entries('https://mydiary201808.herokuapp.com/api/v1/entries', token);
 			return userEntries;
 		}
 	};

@@ -56,7 +56,7 @@ var dataControllor = (function () {
             
 			token = sessionStorage.getItem('token');
 
-			userEntries = entries('http://127.0.0.1:5000/api/v1/entries/'+id, token);
+			userEntries = entries('https://mydiary201808.herokuapp.com/api/v1/entries/'+id, token);
 			return userEntries;
 		},
 
@@ -68,7 +68,7 @@ var dataControllor = (function () {
 			raw_url = window.location.href;
 			url = new URL(raw_url);
 			id = url.searchParams.get('id');
-			output = updateEntries('http://127.0.0.1:5000/api/v1/entries/'+id, token, entry);
+			output = updateEntries('https://mydiary201808.herokuapp.com/api/v1/entries/'+id, token, entry);
 			return output;
 
 		}
