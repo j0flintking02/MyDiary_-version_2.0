@@ -122,7 +122,7 @@ var controllor = (function (dataControllor, uiController) {
 		//redirect the user
 		message.then(function (data) {
 			if (data['message'] ==='new user created'){
-				window.location.replace('file:///E:/projects/MyDiary_version_2.0/signin.html');
+				window.location.replace('file:///E:/projects/MyDiary_version_2.0/index.html');
 			}else{
 				console.log('you have to login please');
 			}
