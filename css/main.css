@@ -189,19 +189,25 @@ label {
     background: url("../img/backgrounds/andela.gif") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
-    overflow: hidden;
 }
 
 /* the description page */
 
 .description_page {
-    background: url("../img/backgrounds/background2.gif") no-repeat center center fixed;
+    background: url("../img/backgrounds/background4.gif") no-repeat center center fixed;
     background-size: cover;
     height: 100%;
     overflow: hidden;
+
 }
 
 .description {
+    background-color: #fefefe;
+    background-size: cover;
+    height: auto;
+    width: 100%;
+  
+    padding: 20px 20px 20px;
     position: absolute;
     top: 20vh;
     left: 33vw;
@@ -311,12 +317,16 @@ text-align: center;
     text-decoration: none;
     cursor: pointer;
 }
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
 
-@media only screen and (min-width: 35em) {
+@media only screen and (max-width: 600px) {
     /* Style adjustments for viewports that meet the condition */
+    body {
+        display: grid;
+    }
 }
 
 @media print,
