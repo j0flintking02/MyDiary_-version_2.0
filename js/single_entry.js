@@ -206,7 +206,7 @@ var controllor = (function (dataControllor, uiController) {
 				raw_url = window.location.href;
 				url = new URL(raw_url);
 				id = url.searchParams.get('id');
-				window.location.replace('file:///E:/projects/MyDiary_version_2.0/description.html?id='+id);
+				window.location.replace('https://j0flintking02.github.io/MyDiary_version_2.0/description.html?id='+id);
 			
 			} else {
 				console.log('Complete the form before you try to continue');

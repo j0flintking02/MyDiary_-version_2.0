@@ -126,7 +126,7 @@ var controllor = (function (dataControllor, uiController) {
 			if (data['token']) {
 				sessionStorage.setItem('token', data['token']);
 				
-				window.location.replace('file:///E:/projects/MyDiary_version_2.0/events.html');
+				window.location.replace('https://j0flintking02.github.io/MyDiary_version_2.0/events.html');
 			} else {
 				console.log('you have to login please');
 			}
