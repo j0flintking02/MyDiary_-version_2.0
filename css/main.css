@@ -146,11 +146,16 @@ legend {
     font-size: 40px;
     text-align: center;
 }
-
-.tab {
-    padding-left: 30px;
+.tab{
     border: #b3d4fc solid;
-    width: 20vw;
+    width: 35vw;
+    height: 5vh;
+    border-radius: 25px;
+}
+
+#title {
+    border: #b3d4fc solid;
+    width: 35vw;
     height: 5vh;
     border-radius: 25px;
 }
@@ -160,7 +165,7 @@ textarea {
     padding: 12px 20px;
     box-sizing: border-box;
     border: #b3d4fc solid;
-    width: 22vw;
+    width: 35vw;
     height: 150px;
     border-radius: 25px;
     resize: none;
@@ -171,7 +176,7 @@ label {
 }
 
 #submit,#update{
-    margin-left: 6vw;
+    margin-left: 15vw;
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -201,7 +206,7 @@ label {
 
 }
 
-.description {
+/* .description {
     background-color: #fefefe;
     background-size: cover;
     height: auto;
@@ -212,7 +217,7 @@ label {
     top: 20vh;
     left: 33vw;
     width: 40vw;
-}
+} */
 
 b {
     font-size: 30px;
