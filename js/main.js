@@ -19,6 +19,7 @@ var dataControllor = (function () {
 			credentials: 'same-origin',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
+				'Access-Control-Allow-Origin' : 'https://mydiary201808.herokuapp.com'
 			},
 			redirect: 'follow',
 			referrer: 'no-referrer',
@@ -39,7 +40,7 @@ var dataControllor = (function () {
 			newUser = new Users(username, password);
 
 			// add to the user to the database
-			message = postData('http://127.0.0.1:5000/api/v1/auth/signup', newUser);
+			message = postData('https://mydiary201808.herokuapp.com/api/v1/auth/signup', newUser);
 			return message;
 		},
 	};
@@ -117,11 +118,11 @@ var controllor = (function (dataControllor, uiController) {
 
 		//add the item to the dataControllor
 		message = dataControllor.addUser(signUpInput.username, signUpInput.password);
-		
+
 		//redirect the user
 		message.then(function (data) {
 			if (data['message'] ==='new user created'){
-				window.location.replace('file:///E:/projects/MyDiary_version_2.0/signin.html');
+				window.location.replace('file:///E:/projects/MyDiary_version_2.0/index.html');
 			}else{
 				console.log('you have to login please');
 			}
@@ -133,7 +134,7 @@ var controllor = (function (dataControllor, uiController) {
 		//clear the ui fields
 		uiController.clearField();
 
-		
+
 	};
 
 	//login the user the app

@@ -19,7 +19,7 @@
     <!--[if lte IE 9]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
-
+    
     <nav>
         <ul>
             <li>
@@ -32,7 +32,7 @@
                 <a href="settings.html">Settings</a>
             </li>
             <li>
-                <a href="signin.html">Logout</a>
+                <a href="index.html">Logout</a>
             </li>
         </ul>
     </nav>
@@ -40,32 +40,30 @@
 
 
     <div class="description">
-        <p class="date">
-            <strong>Date:</strong>
-            <i>2/03/2018</i>
-        </p>
-        <br>
-        <br>
-        <div class="description_title">
-            <b>Title:</b>
-            <span>Lorem ipsum dolor sit amet consectetur elit.</span>
-        </div>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque dolores, nam natus aliquam provident, cupiditate pariatur
-            minima quam, maiores aut soluta odit? Placeat cum exercitationem similique amet doloremque itaque dicta!
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque dolores, nam natus aliquam provident, cupiditate pariatur
-            minima quam, maiores aut soluta odit? Placeat cum exercitationem similique amet doloremque itaque dicta!
-        </p>
-        <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque dolores, nam natus aliquam provident, cupiditate pariatur
-            minima quam, maiores aut soluta odit? Placeat cum exercitationem similique amet doloremque itaque dicta!
-        </p>
-    </div>
 
-    <script src="js/vendor/jquery-3.3.1.min.js"></script>
-    <script src="js/main.js"></script>
+    </div>
+    <div id="updateModel" class="modal">
+        <span class="close">&times;</span>
+        <form class="sginup_form" action="" method="post">
+            <legend class="model_details">Update Entry</legend>
+            <div class="form-group">
+                <label class="model_details" for="entryTitle">Title</label>
+                <br>
+                <input type="text" name="userName" id="title" class="tab" required>
+            </div>
+
+            <div class="form-group">
+                <label class="model_details" for="description">Description</label>
+                <br>
+                <textarea name="description" id="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <button id="update" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="js/single_entry.js"></script>
 
 
 

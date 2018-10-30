@@ -28,7 +28,7 @@ var dataControllor = (function () {
 			var userEntries, token;
 			token = sessionStorage.getItem('token');
 
-			userEntries = entries('http://127.0.0.1:5000/api/v1/entries', token);
+			userEntries = entries('https://mydiary201808.herokuapp.com/api/v1/entries', token);
 			return userEntries;
 		}
 	};
@@ -53,24 +53,26 @@ var uiController = (function () {
 
 		display: function (newEntries) {
 	
-			var placehloder, element, newData;
+			var placehloder, element, newData, newList;
 			//create html string with the placeholder text
 			element = DOMstrings.entryContianer;
 			placehloder =
-				`<div href="#" class="entry">
+				`<div class="entry">
 					<p>
 						<strong>Date:</strong>
-						<a class="entryDate" href="description.html">%entry_date%</a>
+						<a class="entryDate" href="description.html?id=%id%">%entry_date%</a>
 					</p>
 					<h2 class ="entryTitle">%entry_title%</h2>
         		</div>`;
-
-			//replace the placeholder text with actual data
-			newData = placehloder.replace('%entry_date%', newEntries.date);
-			newData = placehloder.replace('entry_title%', newEntries.title);
-
-			//Insert the html in to the DOM
-			document.querySelector(element).insertAdjacentHTML('beforeend', newData);
+			newList = newEntries['entries'];
+			newList.forEach(id => {
+				//replace the placeholder text with actual data
+				newData = placehloder.replace('%id%', id['entry id']);
+				newData = newData.replace('%entry_date%', id['entry date']);
+				newData = newData.replace('%entry_title%', id['title']);
+				//Insert the html in to the 
+				document.querySelector(element).insertAdjacentHTML('beforeend', newData);
+			});
 		},
 
 		getDomStrings: function () {
